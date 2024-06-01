@@ -1,0 +1,89 @@
+Code/Folder Structure:
+  Separate the Core Business Logic/ APIs and DB Communication:
+
+    Grouping of apis with /<path-name>
+    
+    Folder structure:
+      /util ( Common Utilities )
+        utils.js
+      /db-util
+        models.js --> models for the entity used in app
+        db-connection.js --> object/function for connecting with the DB
+      /routes
+        /movies
+          movies-logic.js --> Movie related business Logics
+          movies.js --> movies related routes
+        /users
+          users-logic.js --> User related business Logics
+          users.js --> User related routes
+        /theaters
+          theaters-logic.js --> Theaters related business Logics
+          theaters.js --> Theaters related routes
+        /booking ---> CRUD on theaters
+          booking-logic.js --> Booking related business Logics
+          booking.js --> Booking related routes
+      index.js/server.js --> Server related codes & router in middleware
+      .env ( has to be ignored for Git )
+      .gitignore
+      package.json
+
+    reference: 
+      https://www.codespeedy.com/create-separate-routes-file-in-node-express-js/
+
+Authentication & Authorization:
+
+  Authentication Flow:
+
+    Process of confirming the identity of the user
+
+    technique to know who You are. 
+      if proper user of the application --> Let user use our application
+      else not an user of the application --> do not let the user use our application
+
+    User Register or Login to a Application:
+      1. Write API for register and resgister should create a user in the DB
+      2. So, APIs /register and /login will be public and accessible by public
+      3. Write API for login and login should create a new jwt token along with user details and return to FE
+
+    Login:
+      verification flow
+        call the api, make sure the user is authenticated, then redirect to the home page
+
+    FE: with simple auth
+
+      private routing --> ensuring the authentication status before rendering any page
+      public route/page --> visible for everyone
+  
+
+  FE:
+    Authentication:
+      Login/Register Pages
+      Only these two pages should be accessible before login
+      trying to access any other page should direct back to the login page
+
+Next Session:
+  Authorization Flow:
+
+    Application flow after successfull login:
+      1. use the token from the login response
+      2. APIs except /login, /register, read movies API should contain the request header 
+         authorization/acesstoken: < jwt-token >
+      3. backend will use this token to verify the roles or access or permission of the user in backend
+
+
+Task:
+  please revise today's topics
+  Have a separate google account for development related tasks
+  
+
+Next Session:
+  
+  google account with app_key
+  STMP module nodemailer
+  Email verification
+  complete authorization
+    Authorization:
+      1. Login API will return a token & role, use that token as a identifier 
+      for the login status,
+      2. use local storage to store the token
+        then restrict the user access with role
